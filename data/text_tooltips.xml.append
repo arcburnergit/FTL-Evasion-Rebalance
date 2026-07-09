@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<FTL>
+<text name="tooltip_evadeDisplay">Evasion: Dodges projectiles while above 100%%, consuming 100%% of your evasion. Current Evasion per projectile: %g - %g</text>
+</FTL>
