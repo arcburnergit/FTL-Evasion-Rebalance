@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <FTL>
-<text name="er_lua_engine_level">Dodge per Proj: %d - %d / FTL: %gx</text>
+<text name="er_lua_engine_level">Evasion Increment: %d - %d / FTL: %gx</text>
+<text name="er_lua_sensor_level_3">See enemy weapon and evasion charge</text>
 </FTL>

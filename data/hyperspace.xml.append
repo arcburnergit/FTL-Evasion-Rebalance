@@ -2,4 +2,7 @@
 <mod:findLike type="scripts" reverse="false">
 	<mod-append:script>data/er_scripts/core.lua</mod-append:script>
 </mod:findLike>
+<events>
+	<variable name="er_test_variable" op="set" val="0"/>
+</events>
 </FTL>

@@ -1,11 +1,11 @@
 <metadata>
-  <title><![CDATA[ FTL MV: Minelaunchers Reloaded ]]></title>
+  <title><![CDATA[ FTL MV: Evasion Rework ]]></title>
   <threadUrl><![CDATA[https://ftlmultiverse.boards.net/thread/191/guard-turret-control-system-sectors]]></threadUrl>
   <author><![CDATA[ Arc ]]></author>
   <version><![CDATA[ 1.0 pre ]]></version>
   <description>
 <![CDATA[ 
-Reworks minelaunchers away from the problematic hull damage weapons towards the niche of status effect application over a large area
+Replaces the existing evasion system with one that provides the same number of expected dodges. The new system builds up evasion over time 
 ]]>
   </description>
 </metadata>

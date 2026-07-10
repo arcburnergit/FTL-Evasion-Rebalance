@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FTL>
+<mod:findName type="event" name="START_BEACON_REAL" limit="1">
+	<mod-append:queueEvent>ER_SET_TEST_VALUE</mod-append:queueEvent>
+</mod:findName>
+
+<event name="ER_SET_TEST_VALUE">
+	<variable name="er_test_variable" op="set" val="1"/>
+</event>
+
+</FTL>
