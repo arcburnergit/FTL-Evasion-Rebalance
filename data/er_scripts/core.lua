@@ -137,7 +137,7 @@ script.on_internal_event(Defines.InternalEvents.DAMAGE_AREA, function(shipManage
 			fake = false
 		end
 	end
-	print(projectile.selfId.." DAMAGE_AREA:"..tostring(fake))
+	--print(projectile.selfId.." DAMAGE_AREA:"..tostring(fake))
 	if projectile and not fake and not projectile.table.er_counted and get_room_at_location(shipManager, location, true) >= 0 and not projectile.table.er_shield_post then
 		projectile.table.er_damage_pre = true
 		enable_evasion[shipManager.iShipId] = projectile.selfId
@@ -247,7 +247,7 @@ local function add_evasion(shipManager, projectile)
 end
 
 script.on_internal_event(Defines.InternalEvents.DAMAGE_AREA_HIT, function(shipManager, projectile, location, damage, friendlyFire)
-	print(projectile.selfId.." DAMAGE_AREA_HIT"..tostring(projectile and projectile.table.er_damage_pre))
+	--print(projectile.selfId.." DAMAGE_AREA_HIT"..tostring(projectile and projectile.table.er_damage_pre))
 	if projectile and projectile.table.er_damage_pre then
 		projectile.table.er_damage_post = true
 		if not projectile.table.er_shield_post then
