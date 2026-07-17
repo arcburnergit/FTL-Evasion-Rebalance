@@ -47,6 +47,8 @@ local function get_range(level, add)
 	elseif level >= 8 then base = base - 5 end
 	if base >= 75 then
 		return math.floor(3 * 90), math.ceil(3 * 110)
+	elseif base <= 0 then
+		return 0, 1
 	end
 	local target = (base) / (100 - base)
 	return math.floor(target * 90), math.ceil(target * 110)
@@ -116,7 +118,7 @@ script.on_internal_event(Defines.InternalEvents.DAMAGE_AREA, function(shipManage
 	end
 	local fake = true
 	do
-		local custom_damage = projectile.extend.customDamage.def
+		local custom_damage = projectile and projectile.extend.customDamage.def
 		if 
 			damage.iDamage > 0 or
 			damage.iShieldPiercing > 0 or
@@ -129,10 +131,10 @@ script.on_internal_event(Defines.InternalEvents.DAMAGE_AREA, function(shipManage
 			damage.bLockdown or
 			damage.crystalShard or
 			damage.iStun > 0 or
-			custom_damage.statBoostChance > 0 or
-			custom_damage.roomStatBoostChance > 0 or
-			custom_damage.erosionChance > 0 or
-			custom_damage.crewSpawnChance > 0
+			(custom_damage and custom_damage.statBoostChance > 0) or
+			(custom_damage and custom_damage.roomStatBoostChance > 0) or
+			(custom_damage and custom_damage.erosionChance > 0) or
+			(custom_damage and custom_damage.crewSpawnChance > 0)
 			then
 			fake = false
 		end
@@ -204,6 +206,10 @@ local function add_evasion(shipManager, projectile)
 			if shipManager:HasSystem(6) and shipManager:GetSystem(6).bManned then
 				local pilot = shipManager:GetSystem(6)
 				manning_bonus = manning_bonus + manning_bonus_data[pilot.iActiveManned]
+			end
+
+			if shipManager:GetAugmentationValue("ER_EVASION_REDUCTION") > 0 then
+				manning_bonus = manning_bonus - shipManager:GetAugmentationValue("ER_EVASION_REDUCTION")
 			end
 
 			if shipManager.ship.bCloaked then
@@ -362,7 +368,7 @@ local evasion_tooltip = Hyperspace.Text:GetText("tooltip_evadeDisplay")
 script.on_internal_event(Defines.InternalEvents.ON_TICK, function()
 	if Hyperspace.Mouse.tooltip == evasion_tooltip then
 		local shipManager = Hyperspace.ships.player
-		local min, max = 0
+		local min, max = 0, 0
 		if shipManager:HasSystem(1) then
 			local engine = shipManager:GetSystem(1)
 			local engine_level = engine:GetEffectivePower()
@@ -380,6 +386,11 @@ script.on_internal_event(Defines.InternalEvents.ON_TICK, function()
 					manning_bonus = manning_bonus + 60
 				end
 
+				if shipManager:GetAugmentationValue("ER_EVASION_REDUCTION") > 0 then
+					--print("APPLY REDUCTION:"..tostring(shipManager:GetAugmentationValue("ER_EVASION_REDUCTION")))
+					manning_bonus = manning_bonus - shipManager:GetAugmentationValue("ER_EVASION_REDUCTION")
+				end
+
 				min, max = get_range(engine_level, manning_bonus)
 				if max == min then max = max + 1 end
 
@@ -393,11 +404,11 @@ script.on_internal_event(Defines.InternalEvents.ON_TICK, function()
 							min = math.floor(min * 0.8)
 							max = math.ceil(max * 0.8)
 						else
-							min, max = 0
+							min, max = 0, 0
 						end
 					end
 				else
-					min, max = 0
+					min, max = 0, 0
 				end
 			elseif shipManager.ship.bCloaked then
 				min, max = get_range(engine_level, 60)
